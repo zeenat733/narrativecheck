@@ -1,0 +1,26 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "description": "The role of the user in the app",
+      "enum": [
+        "admin",
+        "user"
+      ]
+    },
+    "reviewModel": {
+      "type": "string",
+      "description": "Which model runs the reviewer pass of the gap check for this user. Set on the Settings page.",
+      "enum": [
+        "built_in",
+        "gpt_oss_20b"
+      ],
+      "default": "built_in"
+    }
+  },
+  "required": [
+    "role"
+  ]
+}

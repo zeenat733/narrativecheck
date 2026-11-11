@@ -1,0 +1,81 @@
+{
+  "name": "AnswerKeyItem",
+  "type": "object",
+  "properties": {
+    "caseNumber": {
+      "type": "string",
+      "description": "Case number the expectation belongs to."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "MISSING",
+        "INCONSISTENT",
+        "UNCLEAR",
+        "CITATION"
+      ],
+      "description": "Expected flag type. Empty on a row that only records the case-level human-review expectation."
+    },
+    "element": {
+      "type": "string",
+      "description": "Element the planted error concerns, in the reviewer's words. Matched fuzzily against the produced flag's element."
+    },
+    "source": {
+      "type": "string",
+      "description": "Where the planted error sits: a sentence ID like S4, a field name, or a free note."
+    },
+    "expectedHumanReview": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this case counts as an ambiguous case that must be routed to human review."
+    },
+    "note": {
+      "type": "string",
+      "description": "Optional note about the planted error."
+    }
+  },
+  "required": [
+    "caseNumber"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

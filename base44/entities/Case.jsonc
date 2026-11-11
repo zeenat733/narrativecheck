@@ -1,0 +1,150 @@
+{
+  "name": "Case",
+  "type": "object",
+  "properties": {
+    "caseNumber": {
+      "type": "string",
+      "description": "Case or file identifier assigned by the station."
+    },
+    "formType": {
+      "type": "string",
+      "enum": [
+        "I-213",
+        "I-44"
+      ],
+      "description": "Form the narrative is recorded on."
+    },
+    "narrative": {
+      "type": "string",
+      "description": "Officer-written charge narrative. Read-only for the review tool; it is never written or rewritten by the tool."
+    },
+    "narrativeSentences": {
+      "type": "array",
+      "description": "Numbered sentence list produced in code from the narrative (S1, S2, ...). Not written by AI.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "encounterDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "encounterTime": {
+      "type": "string"
+    },
+    "encounterLocation": {
+      "type": "string"
+    },
+    "stationOrPort": {
+      "type": "string"
+    },
+    "mannerOfEncounter": {
+      "type": "string"
+    },
+    "subjectName": {
+      "type": "string"
+    },
+    "subjectDOB": {
+      "type": "string",
+      "format": "date"
+    },
+    "citizenship": {
+      "type": "string"
+    },
+    "mannerOfEntry": {
+      "type": "string"
+    },
+    "placeOfEntry": {
+      "type": "string"
+    },
+    "dateOfEntry": {
+      "type": "string",
+      "format": "date"
+    },
+    "immigrationHistory": {
+      "type": "string"
+    },
+    "priorRemovals": {
+      "type": "string"
+    },
+    "subjectStatements": {
+      "type": "string"
+    },
+    "documentsPresented": {
+      "type": "string"
+    },
+    "selectedCharge": {
+      "type": "string",
+      "description": "Charge selected by the officer, e.g. 8 USC 1325(a). The tool never selects or recommends a charge."
+    },
+    "isTestCase": {
+      "type": "boolean",
+      "default": false,
+      "description": "Marks a synthetic record used in batch evaluation."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Reviewed",
+        "Needs Human Review",
+        "Cleared"
+      ],
+      "default": "Draft"
+    }
+  },
+  "required": [
+    "caseNumber",
+    "formType",
+    "narrative"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

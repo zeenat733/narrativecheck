@@ -1,0 +1,97 @@
+{
+  "name": "EvalMark",
+  "type": "object",
+  "properties": {
+    "caseId": {
+      "type": "string",
+      "description": "Case the mark belongs to."
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "flag_verdict",
+        "missed_error",
+        "routing_expectation"
+      ],
+      "description": "flag_verdict: the officer judged a produced flag correct or wrong. missed_error: an error the officer says the run should have caught. routing_expectation: whether the case counts as ambiguous."
+    },
+    "flagIndex": {
+      "type": "number",
+      "description": "Position of the flag in the stored report, for a flag_verdict."
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "correct",
+        "wrong"
+      ],
+      "description": "The officer's judgement of a produced flag."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "MISSING",
+        "INCONSISTENT",
+        "UNCLEAR",
+        "CITATION"
+      ],
+      "description": "Flag type of a hand-added missed error."
+    },
+    "element": {
+      "type": "string",
+      "description": "Element of a hand-added missed error."
+    },
+    "expectedHumanReview": {
+      "type": "boolean",
+      "description": "Whether the case counts as an ambiguous case, for a routing_expectation."
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "caseId",
+    "kind"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

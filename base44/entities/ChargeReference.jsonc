@@ -1,0 +1,52 @@
+{
+  "name": "ChargeReference",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string"
+    },
+    "uscCitation": {
+      "type": "string"
+    },
+    "inaCitation": {
+      "type": "string"
+    },
+    "plainName": {
+      "type": "string"
+    },
+    "plainDescription": {
+      "type": "string"
+    },
+    "requiredFacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "commonConfusions": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "code",
+    "plainName"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
